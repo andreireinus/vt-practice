@@ -1,0 +1,48 @@
+﻿@using Palk2000.Application
+@model SalaryReportRow[]
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Sotsiaalmaks</th>
+            <th>Töötuskindlustusmakse<br /> (tööandja)</th>
+            <th>Töötuskindlustusmakse<br /> (töötaja)</th>
+            <th>Kogumispension<br /> (II sammas)</th>
+            <th>Tulumaks</th>
+            <th>Netopalk</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.Where(r => r.Type == SalaryReportRowType.Data))
+        {
+            <tr>
+                <td>@row.Name</td>
+                <td>@Html.FormatMoney(row.SocialTaxAmount)</td>
+                <td>@Html.FormatMoney(row.CompanyUnemploymentTaxAmount)</td>
+                <td>@Html.FormatMoney(row.EmployeeUnemploymentTaxAmount)</td>
+                <td>@Html.FormatMoney(row.PensionFundAmount)</td>
+                <td>@Html.FormatMoney(row.IncomeTaxAmount)</td>
+                <td>@Html.FormatMoney(row.NetPay)</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        @foreach (var row in Model.Where(r => r.Type == SalaryReportRowType.Footer))
+        {
+            <tr>
+                <th>Kokku</th>
+                <th>@Html.FormatMoney(row.SocialTaxAmount)</th>
+                <th>@Html.FormatMoney(row.CompanyUnemploymentTaxAmount)</th>
+                <th>@Html.FormatMoney(row.EmployeeUnemploymentTaxAmount)</th>
+                <th>@Html.FormatMoney(row.PensionFundAmount)</th>
+                <th>@Html.FormatMoney(row.IncomeTaxAmount)</th>
+                <th>@Html.FormatMoney(row.NetPay)</th>
+            </tr>
+        }
+    </tfoot>
+</table>
